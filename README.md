@@ -1,49 +1,27 @@
-# CareerAI — RAG-Powered Resume & Job Description Intelligence
+# 🚀 CareerAI — RAG-Powered Career Intelligence
 
-CareerAI is an AI-powered career analysis application that compares a candidate's **Resume/CV** with a specific **Job Description (JD)** using **Retrieval-Augmented Generation (RAG)**.
+> An AI-powered career assistant that analyzes a **Resume + Job Description** and provides a grounded assessment of job fit, missing skills, improvement areas, and project recommendations.
 
-The system extracts information from both documents, creates a searchable vector representation, retrieves relevant resume/JD information, and uses an LLM to generate a grounded career analysis.
+CareerAI uses **Retrieval-Augmented Generation (RAG)** to combine your uploaded documents with an LLM, helping generate responses based on the actual Resume and Job Description rather than relying only on general AI knowledge.
 
-## 🚀 Features
+### 🎯 What CareerAI Can Do
 
-- Upload Resume/CV in PDF, DOCX, TXT or Markdown format
-- Upload Job Description in PDF, DOCX, TXT or Markdown format
-- Resume–JD compatibility / match score
-- Identification of:
-  - Strong matches
-  - Missing or weak skills
-  - Areas for improvement
-  - Recommended projects
-  - Career suggestions
-- Ask follow-up questions about the uploaded Resume and JD
-- RAG-based document retrieval
-- Semantic search using vector embeddings
-- LLM-generated career analysis
-- Session-based conversation
-- Local vector database using ChromaDB
+- 📄 Analyze resumes in **PDF, DOCX, TXT, and Markdown**
+- 💼 Analyze a specific **Job Description**
+- 🔎 Perform **semantic search** over resume and JD content
+- 📊 Generate a **resume–job match analysis**
+- 🧩 Identify **missing or weak skills**
+- 💡 Suggest **improvements and relevant projects**
+- 💬 Answer questions about the uploaded Resume + JD
+- 🧠 Use **RAG + LLMs** for grounded career assistance
 
-## 🧠 How It Works
+---
 
-```text
-Resume + Job Description
-          ↓
-   Document Extraction
-          ↓
-      Text Chunking
-          ↓
-   Embedding Generation
-          ↓
-     ChromaDB Vector Store
-          ↓
-   Semantic Retrieval
-          ↓
-      Relevant Context
-          ↓
-       LLM / RAG
-          ↓
- Resume–JD Career Analysis
-          ↓
- Match Score + Strengths + Gaps
- + Improvements + Project Suggestions
-          ↓
-       User Q&A
+### ⭐ Project Status
+
+**Status:** `Working Prototype`  
+**Interface:** `Streamlit`  
+**Architecture:** `RAG + Semantic Search + LLM`  
+**Vector Database:** `ChromaDB`
+
+---
