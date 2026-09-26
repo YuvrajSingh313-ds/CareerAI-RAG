@@ -882,13 +882,19 @@ with st.sidebar:
 
     st.divider()
 
-    if st.button(
-        "🗑️ Clear Conversation",
-        use_container_width=True,
-    ):
-        st.session_state.messages = []
-        st.rerun()
+    # =========================================================
+# CLEAR CONVERSATION
+# =========================================================
+def clear_conversation():
+    st.session_state.messages = []
 
+if st.button(
+    "🗑️ Clear Conversation",
+    use_container_width=True,
+    key="clear_conversation_btn",
+):
+    clear_conversation()
+    st.rerun()
 # =========================================================
 # MAIN HERO
 # =========================================================
