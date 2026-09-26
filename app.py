@@ -263,6 +263,10 @@ def init_state():
         "db_ready": False,
         "chroma_client": None,
         "chroma_collection": None,
+        # Changes whenever the login/session UI is reset.
+        # This prevents Streamlit from reusing the previous name/file uploader values.
+        "reset_id": 0,
+        "login_reset_id": 0,
     }
     for key, value in defaults.items():
         if key not in st.session_state:
@@ -286,10 +290,13 @@ def show_login():
 
     _, center, _ = st.columns([1, 1.3, 1])
     with center:
+        # Use a changing widget key so a previous user's name is NEVER
+        # restored by Streamlit when Change User is clicked.
         name = st.text_input(
             "Your name",
             placeholder="e.g. Yuvraj Singh",
             max_chars=100,
+            key=f"login_name_{st.session_state.login_reset_id}",
         )
         if st.button("🚀 Start CareerAI", use_container_width=True, type="primary"):
             if len(name.strip()) < 2:
@@ -747,27 +754,22 @@ with st.sidebar:
     st.caption(f"Welcome, {st.session_state.user_name}")
 
     if st.button("🚪 Change User", use_container_width=True):
-        for key in [
-            "user_name",
-            "messages",
-            "resume_text",
-            "resume_name",
-            "resume_hash",
-            "jd_text",
-            "jd_name",
-            "jd_hash",
-            "analysis",
-            "db_ready",
-            "chroma_client",
-            "chroma_collection",
-        ]:
-            if key in st.session_state:
-                if key == "messages":
-                    st.session_state[key] = []
-                elif key in ("chroma_client", "chroma_collection"):
-                    st.session_state[key] = None
-                else:
-                    st.session_state[key] = None
+        # Full reset before showing the login screen.
+        # Incrementing login_reset_id also creates a fresh name input widget.
+        st.session_state.user_name = None
+        st.session_state.messages = []
+        st.session_state.resume_text = None
+        st.session_state.resume_name = None
+        st.session_state.resume_hash = None
+        st.session_state.jd_text = None
+        st.session_state.jd_name = None
+        st.session_state.jd_hash = None
+        st.session_state.analysis = None
+        st.session_state.db_ready = False
+        st.session_state.chroma_client = None
+        st.session_state.chroma_collection = None
+        st.session_state.login_reset_id += 1
+        st.session_state.reset_id += 1
         st.rerun()
 
     st.divider()
@@ -781,7 +783,8 @@ with st.sidebar:
     resume_file = st.file_uploader(
         "Resume",
         type=["pdf", "docx", "txt", "md"],
-        key="resume_uploader",
+        # Dynamic key lets Clear Conversation remove the selected file too.
+        key=f"resume_uploader_{st.session_state.reset_id}",
         label_visibility="collapsed",
     )
 
@@ -822,7 +825,8 @@ with st.sidebar:
     jd_file = st.file_uploader(
         "Job Description",
         type=["pdf", "docx", "txt", "md"],
-        key="jd_uploader",
+        # Dynamic key lets Clear Conversation remove the selected file too.
+        key=f"jd_uploader_{st.session_state.reset_id}",
         label_visibility="collapsed",
     )
 
@@ -882,19 +886,28 @@ with st.sidebar:
 
     st.divider()
 
-    # =========================================================
-# CLEAR CONVERSATION
-# =========================================================
-def clear_conversation():
-    st.session_state.messages = []
+    if st.button(
+        "🗑️ Clear Conversation",
+        use_container_width=True,
+    ):
+        # Clear the visible conversation AND the current uploaded documents,
+        # analysis and temporary RAG database. Keep the current user's name.
+        st.session_state.messages = []
+        st.session_state.resume_text = None
+        st.session_state.resume_name = None
+        st.session_state.resume_hash = None
+        st.session_state.jd_text = None
+        st.session_state.jd_name = None
+        st.session_state.jd_hash = None
+        st.session_state.analysis = None
+        st.session_state.db_ready = False
+        st.session_state.chroma_client = None
+        st.session_state.chroma_collection = None
 
-if st.button(
-    "🗑️ Clear Conversation",
-    use_container_width=True,
-    key="clear_conversation_btn",
-):
-    clear_conversation()
-    st.rerun()
+        # Changing the uploader keys forces Streamlit to create empty uploaders.
+        st.session_state.reset_id += 1
+        st.rerun()
+
 # =========================================================
 # MAIN HERO
 # =========================================================
