@@ -1,6 +1,7 @@
 streamlit
 chromadb
 sentence-transformers
+python-dotenv
 google-genai
 PyPDF2
-python-dotenv
+python-docx
