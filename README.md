@@ -38,7 +38,7 @@ The system combines document retrieval, text embeddings, vector search, and LLM-
 
 🛠️ Tech Stack
 
-Python • Streamlit • ChromaDB • Ollama • LLM • Embeddings • RAG
+Python • Streamlit • FastAPI • Gemini API • Sentence Transformers • ChromaDB • RAG
 
 📁 Structure
 CareerAI-RAG/
