@@ -2,5 +2,5 @@ streamlit
 chromadb
 sentence-transformers
 google-genai
-pypdf
+PyPDF2
 python-dotenv
