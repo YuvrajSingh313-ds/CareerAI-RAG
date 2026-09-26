@@ -35,7 +35,23 @@ st.set_page_config(
 # =========================================================
 st.markdown("""
 <style>
-#MainMenu, footer, header {visibility:hidden;}
+#MainMenu, footer {visibility:hidden;}
+
+header {
+    visibility:visible !important;
+    background:transparent !important;
+}
+
+/* Keep the sidebar toggle accessible on desktop and mobile */
+[data-testid="stSidebarCollapseButton"] {
+    visibility:visible !important;
+    display:flex !important;
+}
+
+[data-testid="stSidebarCollapsedControl"] {
+    visibility:visible !important;
+    display:flex !important;
+}
 
 .stApp {
     background:
